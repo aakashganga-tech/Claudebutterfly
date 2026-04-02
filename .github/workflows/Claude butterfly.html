@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Aakash Singh</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+
+body{
+  background:linear-gradient(160deg,#c9ecff 0%,#8dd4f5 40%,#b0e5ff 70%,#d8f4ff 100%);
+  min-height:200vh;
+  font-family:Georgia,'Times New Roman',serif;
+  color:#1a3a4a;
+  overflow-x:hidden;
+}
+
+/* ── BUTTERFLY ── */
+#bfly{
+  position:fixed;z-index:9999;pointer-events:none;
+  width:70px;height:70px;
+  top:30vh;right:-90px;
+  animation:bfly 4.5s cubic-bezier(.3,0,.2,1) forwards;
+}
+@keyframes bfly{
+  0%  {right:-90px;top:30vh;}
+  35% {right:47%;top:26vh;}
+  60% {right:49%;top:22vh;}
+  80% {right:48%;top:23.5vh;}
+  100%{right:47.5%;top:23vh;}
+}
+.bwing{position:absolute;top:10px;}
+.bwing.left {left:0;  transform-origin:right center;animation:flap .22s ease-in-out infinite alternate;}
+.bwing.right{left:35px;transform-origin:left  center;animation:flap .22s ease-in-out infinite alternate-reverse;}
+@keyframes flap{0%{transform:scaleX(1);}100%{transform:scaleX(.22);}}
+
+/* ── HERO ── */
+#hero{
+  height:100vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  position:relative;
+  transition:opacity .7s ease,transform .7s ease;
+}
+#hero.gone{opacity:0;transform:translateY(-70px);pointer-events:none;}
+
+.ncard{
+  background:rgba(255,255,255,0.60);
+  border:2.5px solid rgba(255,255,255,0.92);
+  border-radius:30px;
+  padding:52px 76px;
+  text-align:center;
+  box-shadow:0 8px 50px rgba(60,140,200,.22),
+             0 0 0 1px rgba(255,255,255,.5) inset;
+  -webkit-backdrop-filter:blur(18px);
+  backdrop-filter:blur(18px);
+  animation:cardin 1s cubic-bezier(.23,1,.32,1) both;
+}
+@keyframes cardin{0%{opacity:0;transform:scale(.85) translateY(38px);}100%{opacity:1;transform:scale(1) translateY(0);}}
+
+.nem{font-size:clamp(3rem,7vw,4.8rem);display:block;margin-bottom:10px;animation:bob 2.5s ease-in-out infinite;}
+@keyframes bob{0%,100%{transform:translateY(0);}50%{transform:translateY(-12px);}}
+
+.ntxt{
+  font-size:clamp(3.5rem,9vw,6.5rem);
+  font-weight:900;
+  color:#0e3a5c;
+  text-shadow:0 2px 0 rgba(255,255,255,.9),0 4px 22px rgba(60,130,200,.2);
+  letter-spacing:.06em;line-height:1;
+}
+.swg{
+  margin-top:20px;
+  font-size:clamp(1rem,2.8vw,1.5rem);
+  font-style:italic;color:rgba(26,58,74,.72);letter-spacing:.1em;
+}
+
+.sh{
+  position:absolute;bottom:32px;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  color:rgba(26,58,74,.5);font-size:.7rem;letter-spacing:.14em;
+  font-family:Arial,sans-serif;text-transform:uppercase;
+  animation:pulse 2s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{opacity:.35;}50%{opacity:.9;}}
+.arrow{width:22px;height:22px;border-right:2.5px solid rgba(26,58,74,.45);border-bottom:2.5px solid rgba(26,58,74,.45);transform:rotate(45deg);animation:ad 1.4s ease-in-out infinite;}
+@keyframes ad{0%,100%{transform:rotate(45deg) translateY(-4px);opacity:.3;}50%{transform:rotate(45deg) translateY(4px);opacity:.9;}}
+
+/* ── MAIN SECTION ── */
+#main{
+  min-height:100vh;padding:72px 20px 140px;
+  display:flex;flex-direction:column;align-items:center;
+  opacity:0;transform:translateY(60px);
+  transition:opacity .9s ease .1s,transform .9s ease .1s;
+}
+#main.show{opacity:1;transform:translateY(0);}
+
+.myname{
+  font-size:clamp(2rem,6vw,4rem);font-weight:900;
+  letter-spacing:.22em;color:#0d3a5c;text-align:center;
+  text-shadow:0 2px 0 rgba(255,255,255,.85),0 6px 28px rgba(60,140,200,.3);
+  margin-bottom:56px;
+  animation:glow 3s ease-in-out infinite alternate;
+}
+@keyframes glow{0%{text-shadow:0 2px 0 rgba(255,255,255,.85),0 6px 28px rgba(60,140,200,.25);}100%{text-shadow:0 2px 0 rgba(255,255,255,.85),0 6px 44px rgba(60,140,200,.55);}}
+
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:26px;max-width:880px;width:100%;}
+@media(max-width:600px){.grid{grid-template-columns:1fr;}}
+
+.card{
+  background:rgba(255,255,255,.58);
+  border:2px solid rgba(255,255,255,.88);
+  border-radius:22px;padding:34px 28px;cursor:pointer;
+  box-shadow:0 4px 26px rgba(60,150,210,.14);
+  -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+  transition:transform .3s,box-shadow .3s,background .3s;
+  opacity:0;transform:translateY(36px);position:relative;overflow:hidden;
+}
+.card::before{content:'';position:absolute;top:-50%;left:-50%;width:100%;height:100%;background:radial-gradient(circle,rgba(255,255,255,.4) 0%,transparent 70%);pointer-events:none;}
+.card.in{opacity:1;transform:translateY(0);transition:opacity .6s ease,transform .6s cubic-bezier(.23,1,.32,1),box-shadow .3s,background .3s;}
+.card:hover{transform:translateY(-7px) scale(1.025);background:rgba(255,255,255,.75);box-shadow:0 16px 44px rgba(60,140,200,.28);}
+.cicon{font-size:2.1rem;display:block;margin-bottom:12px;}
+.ctitle{font-weight:700;font-size:clamp(.9rem,1.9vw,1.1rem);letter-spacing:.08em;color:#0d3a5c;margin-bottom:8px;}
+.chint{font-size:.74rem;color:rgba(26,58,74,.5);letter-spacing:.06em;font-family:Arial,sans-serif;}
+
+/* ── MODAL ── */
+.overlay{
+  position:fixed;inset:0;background:rgba(80,160,220,.18);
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+  z-index:800;display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity .35s;
+}
+.overlay.open{opacity:1;pointer-events:all;}
+.mbox{
+  background:rgba(255,255,255,.78);
+  border:2px solid rgba(255,255,255,.95);
+  border-radius:26px;padding:46px 52px;
+  max-width:560px;width:90%;
+  box-shadow:0 24px 64px rgba(40,120,190,.28);
+  transform:scale(.88) translateY(28px);
+  transition:transform .4s cubic-bezier(.23,1,.32,1);
+  position:relative;max-height:85vh;overflow-y:auto;
+  -webkit-backdrop-filter:blur(24px);backdrop-filter:blur(24px);
+}
+.overlay.open .mbox{transform:scale(1) translateY(0);}
+.mtitle{font-weight:700;font-size:1.25rem;color:#0d3a5c;margin-bottom:18px;letter-spacing:.06em;}
+.mbody{font-size:.95rem;line-height:1.9;color:rgba(20,50,70,.88);font-family:Arial,sans-serif;}
+.mbody strong{color:#0d4a6c;}
+.mclose{position:absolute;top:16px;right:18px;background:rgba(255,255,255,.65);border:1.5px solid rgba(180,220,240,.9);border-radius:50%;width:34px;height:34px;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#0d3a5c;transition:background .2s;}
+.mclose:hover{background:rgba(255,255,255,.95);}
+
+/* ── CONTACTS ── */
+#contacts{
+  position:fixed;bottom:28px;right:24px;
+  display:flex;flex-direction:column;gap:12px;
+  z-index:700;
+  opacity:0;transform:translateX(70px);
+  transition:opacity .5s,transform .5s cubic-bezier(.23,1,.32,1);
+  pointer-events:none;
+}
+#contacts.show{opacity:1;transform:translateX(0);pointer-events:all;}
+.cbtn{
+  width:50px;height:50px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  text-decoration:none;
+  background:rgba(255,255,255,.6);
+  border:2px solid rgba(255,255,255,.9);
+  box-shadow:0 4px 18px rgba(60,140,200,.2);
+  transition:transform .25s,box-shadow .25s,background .25s;
+  -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
+}
+.cbtn:hover{transform:scale(1.15);background:rgba(255,255,255,.88);box-shadow:0 8px 28px rgba(60,140,200,.35);}
+
+/* ── PARTICLES ── */
+.ptcl{position:fixed;border-radius:50%;pointer-events:none;z-index:0;animation:rise linear infinite;}
+@keyframes rise{0%{transform:translateY(100vh);opacity:0;}8%{opacity:.14;}92%{opacity:.14;}100%{transform:translateY(-100px);opacity:0;}}
+</style>
+</head>
+<body>
+
+<!-- BUTTERFLY -->
+<div id="bfly">
+  <div class="bwing left">
+    <svg width="32" height="44" viewBox="0 0 32 44">
+      <ellipse cx="16" cy="22" rx="15" ry="20" fill="#9b59d0" opacity=".85"/>
+      <ellipse cx="11" cy="22" rx="9"  ry="13" fill="#c084fc" opacity=".55"/>
+    </svg>
+  </div>
+  <div class="bwing right">
+    <svg width="32" height="44" viewBox="0 0 32 44">
+      <ellipse cx="16" cy="22" rx="15" ry="20" fill="#9b59d0" opacity=".85"/>
+      <ellipse cx="21" cy="22" rx="9"  ry="13" fill="#c084fc" opacity=".55"/>
+    </svg>
+  </div>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="ncard">
+    <span class="nem">🙏</span>
+    <div class="ntxt">नमस्ते</div>
+    <div class="swg">आपका स्वागत है</div>
+  </div>
+  <div class="sh"><div class="arrow"></div>Scroll karo</div>
+</section>
+
+<!-- MAIN -->
+<section id="main">
+  <h1 class="myname">AAKASH SINGH</h1>
+  <div class="grid">
+    <div class="card" onclick="openM('about')">
+      <span class="cicon">🌟</span>
+      <div class="ctitle">Know About Me</div>
+      <div class="chint">Click to explore →</div>
+    </div>
+    <div class="card" onclick="openM('goals')">
+      <span class="cicon">🎯</span>
+      <div class="ctitle">My Life Goals</div>
+      <div class="chint">Click to explore →</div>
+    </div>
+    <div class="card" onclick="openM('achievements')">
+      <span class="cicon">🃏</span>
+      <div class="ctitle">My Achievements</div>
+      <div class="chint">Click to explore →</div>
+    </div>
+    <div class="card" onclick="openM('personality')">
+      <span class="cicon">🧠</span>
+      <div class="ctitle">What Type of Person I Am</div>
+      <div class="chint">Click to explore →</div>
+    </div>
+  </div>
+</section>
+
+<!-- MODAL -->
+<div class="overlay" id="overlay" onclick="bgC(event)">
+  <div class="mbox" id="mbox">
+    <button class="mclose" onclick="closeM()">✕</button>
+    <div class="mtitle" id="mtitle"></div>
+    <div class="mbody"  id="mbody"></div>
+  </div>
+</div>
+
+<!-- CONTACTS -->
+<div id="contacts">
+  <a class="cbtn" href="https://wa.me/917484880763" target="_blank" title="WhatsApp">
+    <svg width="28" height="28" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#25D366"/>
+    <path d="M22.5 19.6c-.3-.15-1.8-.9-2.08-1-.28-.1-.48-.15-.68.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.47-.89-.79-1.49-1.76-1.66-2.06-.17-.3-.02-.46.13-.6.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.68-1.63-.93-2.23-.24-.58-.49-.5-.68-.51-.17 0-.37-.02-.57-.02-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.22 3.08c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.7.63.71.22 1.36.19 1.87.12.57-.08 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.42-.07-.13-.27-.2-.57-.35z" fill="white"/></svg>
+  </a>
+  <a class="cbtn" href="https://www.instagram.com/cholebhatureaursamosee/" target="_blank" title="Instagram">
+    <svg width="28" height="28" viewBox="0 0 32 32">
+      <defs><linearGradient id="ig" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#f09433"/><stop offset="50%" stop-color="#dc2743"/><stop offset="100%" stop-color="#bc1888"/></linearGradient></defs>
+      <rect width="32" height="32" rx="8" fill="url(#ig)"/>
+      <rect x="8" y="8" width="16" height="16" rx="4" stroke="white" stroke-width="1.8" fill="none"/>
+      <circle cx="16" cy="16" r="4" stroke="white" stroke-width="1.8" fill="none"/>
+      <circle cx="21" cy="11" r="1.3" fill="white"/>
+    </svg>
+  </a>
+  <a class="cbtn" href="mailto:aakash.siingh.525@gmail.com" title="Email">
+    <svg width="28" height="28" viewBox="0 0 32 32">
+      <rect width="32" height="32" rx="6" fill="#EA4335"/>
+      <rect x="4" y="8" width="24" height="16" rx="2.5" fill="white" opacity=".15" stroke="white" stroke-width="1.4"/>
+      <polyline points="4,8 16,18 28,8" stroke="white" stroke-width="1.8" fill="none"/>
+    </svg>
+  </a>
+</div>
+
+<script>
+/* Particles */
+const pc=['#c2e8ff','#a0d8f3','#d0b4f8','#ffffff','#b4ecd6'];
+for(let i=0;i<20;i++){
+  const d=document.createElement('div');d.className='ptcl';
+  const s=Math.random()*16+5;
+  d.style.cssText=`width:${s}px;height:${s}px;left:${Math.random()*100}vw;bottom:-30px;`
+    +`background:${pc[Math.floor(Math.random()*pc.length)]};`
+    +`animation-duration:${Math.random()*12+9}s;animation-delay:${Math.random()*9}s;`;
+  document.body.appendChild(d);
+}
+
+/* Modal data */
+const D={
+  about:{title:'🌟 Know About Me',body:`
+Hi! I'm <strong>Aakash Singh</strong> — a sharp, curious young mind from <strong>Jamshedpur, Jharkhand, India</strong> 🇮🇳.<br><br>
+I'm currently finishing my exams and standing at one of the most exciting crossroads of life — figuring out which path leads to the biggest impact, the best opportunities, and the most meaningful career.<br><br>
+I have a deep interest in <strong>law, business, finance, and management consulting</strong>. I think carefully about the future — whether it's how AI will reshape industries, or which degree will give me an edge in the global corporate world.<br><br>
+I dream big about <strong>living and working abroad</strong> — the UK, Canada, UAE, and Australia excite me. The world is large, and I intend to experience a great deal of it. 🌍`},
+  goals:{title:'🎯 My Life Goals',body:`
+I believe life is meant to be lived with <strong>ambition and intention</strong>. My goals aren't small.<br><br>
+🏆 <strong>Career:</strong> Reach a senior corporate role — management consultant, CFO, or legal strategist at a global firm. I want to be in rooms where important decisions are made.<br><br>
+🌍 <strong>International Life:</strong> Relocate abroad — UK, Canada, UAE, or Australia — and build a career respected across borders.<br><br>
+📚 <strong>Education:</strong> Pursue the smartest degree combo — CA+MBA, BA LLB, or BBA+MBA — to maximize earnings and AI-era relevance.<br><br>
+💡 <strong>Independence:</strong> Earn during studies, not after. Build real-world experience while learning.<br><br>
+🤖 <strong>AI-resilience:</strong> Position myself as a deployer and manager of AI — not someone replaced by it.`},
+  achievements:{title:'🃏 My Achievements',body:`
+Like the Joker who holds all the cards, I've been collecting my own quiet wins. 🃏<br><br>
+✅ Survived one of India's most competitive educational environments — and kept going stronger.<br><br>
+🧠 Self-taught a deep understanding of India's hardest exams — CAT, CA, UPSC — enough to compare them rigorously and understand what each truly demands.<br><br>
+📊 Built a sharp, structured framework for career decisions — weighing earnings, AI resilience, and global mobility all at once.<br><br>
+🔍 Identified management consulting as a top-tier career path and started aligning choices toward it — long before most peers know what it even means.<br><br>
+💬 Developed an ability to think clearly and ask the right questions — which is honestly rarer than any degree.<br><br>
+<em style="color:rgba(20,50,70,.6)">(More wins loading... stay tuned 😎)</em>`},
+  personality:{title:'🧠 What Type of Person I Am',body:`
+I'm the kind of person who thinks before speaking — but speaks with conviction when I do.<br><br>
+🔥 <strong>Ambitious & Driven:</strong> I don't settle for "good enough." Whether it's a career choice or a life plan, I want the best version — and I'm willing to work for it.<br><br>
+🤔 <strong>Analytical & Strategic:</strong> I break down problems. I look at options from multiple angles. I don't follow the crowd just because it's moving.<br><br>
+📖 <strong>Curious & Self-aware:</strong> I ask big questions — about law, AI, careers, money, the world. And I'm honest enough to admit what I don't yet know.<br><br>
+💛 <strong>Warm & Grounded:</strong> Despite the ambition, I stay connected to where I come from. Family, roots, and values matter deeply to me.<br><br>
+😄 <strong>Quietly Funny:</strong> I have a dry, witty sense of humour that sneaks up on people.<br><br>
+🌱 In short? I'm someone still <em>becoming</em> — and that becoming is going to be something special.`}
+};
+
+function openM(k){
+  document.getElementById('mtitle').innerHTML=D[k].title;
+  document.getElementById('mbody').innerHTML=D[k].body;
+  document.getElementById('overlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeM(){
+  document.getElementById('overlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+function bgC(e){if(e.target===document.getElementById('overlay'))closeM();}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeM();});
+
+/* Scroll */
+const hero=document.getElementById('hero');
+const main=document.getElementById('main');
+const cont=document.getElementById('contacts');
+const cards=[...document.querySelectorAll('.card')];
+let hg=false,ci=false;
+
+window.addEventListener('scroll',()=>{
+  const sy=window.scrollY;
+  const mx=document.documentElement.scrollHeight-window.innerHeight;
+
+  if(sy>80&&!hg){
+    hero.classList.add('gone');
+    main.classList.add('show');
+    hg=true;
+    if(!ci){cards.forEach((c,i)=>setTimeout(()=>c.classList.add('in'),200+i*130));ci=true;}
+  } else if(sy<=80&&hg){
+    hero.classList.remove('gone');
+    main.classList.remove('show');
+    hg=false;
+  }
+  if(sy>mx*0.70) cont.classList.add('show');
+  else            cont.classList.remove('show');
+});
+
+/* Butterfly: slow flap after landing → fade out */
+setTimeout(()=>{
+  document.querySelectorAll('.bwing').forEach(w=>{
+    w.style.animation='flap .9s ease-in-out infinite alternate';
+  });
+},2800);
+setTimeout(()=>{
+  const b=document.getElementById('bfly');
+  b.style.transition='opacity 1.2s';
+  b.style.opacity='0';
+  setTimeout(()=>b.remove(),1400);
+},5500);
+</script>
+</body>
+</html>
